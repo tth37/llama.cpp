@@ -1,0 +1,6 @@
+set(TARGET bench-mysgemm)
+add_executable(${TARGET} bench-mysgemm.cpp)
+install(TARGETS ${TARGET} RUNTIME)
+find_package(OpenMP REQUIRED)
+target_link_libraries(${TARGET} PRIVATE llama OpenMP::OpenMP_CXX ${CMAKE_THREAD_LIBS_INIT})
+target_compile_features(${TARGET} PRIVATE cxx_std_17)

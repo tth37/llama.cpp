@@ -28,17 +28,6 @@ bool llamafile_sgemm(const struct ggml_compute_params * params, int64_t, int64_t
                      int, int, int);
 }
 
-/**
- * @brief A simple, unoptimized reference implementation for C = A^T * B.
- *
- * This function is for verification purposes. It assumes specific memory layouts
- * based on the leading dimension (ld) parameters provided in the original code,
- * which are common in libraries like GGML/llama.cpp.
- *
- * @param A (k x m), row-major.
- * @param B (k x n), column-major.
- * @param C (m x n), column-major.
- */
 void reference_sgemm(long m, long n, long k,
                      const float* A, long lda, // Assumed k x m, row-major (lda=m)
                      const float* B, long ldb, // Assumed k x n, col-major (ldb=k)
@@ -59,9 +48,6 @@ void reference_sgemm(long m, long n, long k,
     }
 }
 
-/**
- * @brief Verifies if two matrices are element-wise equal within a tolerance.
- */
 bool verify_results(long m, long n, const float* C_actual, const float* C_ref, long ldc) {
     const float epsilon = 1e-4f * n; // Tolerance proportional to accumulation size
     for (long j = 0; j < n; ++j) {
@@ -80,7 +66,6 @@ bool verify_results(long m, long n, const float* C_actual, const float* C_ref, l
 
 
 int main(int argc, char* argv[]) {
-    // --- Parse CLI Arguments with Defaults ---
     long m = (argc > 1) ? std::stol(argv[1]) : 32;
     long n = (argc > 2) ? std::stol(argv[2]) : 4096;
     long k = (argc > 3) ? std::stol(argv[3]) : 1024;
