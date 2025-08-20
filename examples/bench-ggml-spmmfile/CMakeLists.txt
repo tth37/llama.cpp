@@ -1,0 +1,5 @@
+set(TARGET bench-ggml-spmmfile)
+add_executable(${TARGET} bench-ggml-spmmfile.cpp)
+install(TARGETS ${TARGET} RUNTIME)
+target_link_libraries(${TARGET} PRIVATE common llama gomp ${CMAKE_THREAD_LIBS_INIT})
+target_compile_features(${TARGET} PRIVATE cxx_std_17)

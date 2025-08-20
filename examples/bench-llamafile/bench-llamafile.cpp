@@ -1,6 +1,7 @@
 // #include "sgemm.h"
 #include "ggml.h"
 #include "ggml-cpu.h"
+#include "ggml-backend.h"
 #include <iostream>
 #include <vector>
 #include <cstring>
@@ -166,3 +167,49 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+// #include "ggml.h"
+// #include "ggml-cpu.h"
+// #include "ggml-backend.h"
+// #include <vector>
+// #include <chrono>
+// #include <iostream>
+
+
+// int main(int argc, char *argv[]) {
+
+//     struct ggml_init_params params = {
+//         .mem_size = 1024 * 1024 * 1024,  // 1 GB
+//         .mem_buffer = NULL,
+//         .no_alloc = false,
+//     };
+//     struct ggml_context *ctx = ggml_init(params);
+//     struct ggml_cgraph *gf = ggml_new_graph(ctx);
+
+//     struct ggml_tensor *x = ggml_new_tensor_2d(ctx, GGML_TYPE_F32, 1024, 32);
+//     struct ggml_tensor *w = ggml_new_tensor_2d(ctx, GGML_TYPE_F32, 1024, 1024);
+//     x = ggml_mul_mat(ctx, w, x);
+
+//     ggml_build_forward_expand(gf, x);
+
+//     struct ggml_threadpool_params tpp = ggml_threadpool_params_default(4);
+//     struct ggml_threadpool* threadpool = ggml_threadpool_new(&tpp);
+
+//     struct ggml_cplan cplan = ggml_graph_plan(gf, 4, threadpool);
+
+//     std::vector<uint8_t> work_data(cplan.work_size);
+//     std::cout << "work_size: " << cplan.work_size << std::endl;
+//     cplan.work_data = work_data.data();
+
+//     ggml_graph_compute(gf, &cplan);
+
+//     auto t0 = std::chrono::high_resolution_clock::now();
+//     for (int i = 0; i < 10; i++) {
+//         ggml_graph_compute(gf, &cplan);
+//     }
+//     auto t1 = std::chrono::high_resolution_clock::now();
+
+//     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count();
+//     std::cout << "Average time per run: " << duration / 10.0 << " us" << std::endl;
+
+//     return 0;
+// }

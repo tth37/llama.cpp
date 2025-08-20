@@ -88,6 +88,10 @@ function(ggml_add_cpu_backend_variant_impl tag_name)
                     ggml-cpu/llamafile/sgemm.h)
     endif()
 
+    list(APPEND GGML_CPU_SOURCES
+                    ggml-cpu/spmmfile/sgemm.cpp
+                    ggml-cpu/spmmfile/sgemm.h)
+
     if (GGML_CPU_HBM)
         find_library(memkind memkind REQUIRED)
 

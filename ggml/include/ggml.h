@@ -464,6 +464,7 @@ extern "C" {
         GGML_OP_L2_NORM,
 
         GGML_OP_MUL_MAT,
+        GGML_OP_MUL_MAT_SPMMFILE,
         GGML_OP_MUL_MAT_ID,
         GGML_OP_OUT_PROD,
 
@@ -1260,6 +1261,12 @@ extern "C" {
             struct ggml_context * ctx,
             struct ggml_tensor  * a,
             struct ggml_tensor  * b);
+
+    GGML_API struct ggml_tensor * ggml_mul_mat_spmmfile(
+            struct ggml_context * ctx,
+            struct ggml_tensor  * a,
+            struct ggml_tensor  * b
+    );
 
     // change the precision of a matrix multiplication
     // set to GGML_PREC_F32 for higher precision (useful for phi-2)
